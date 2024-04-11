@@ -15,4 +15,5 @@ public class MessageIncomingDto {
     @NotNull
     @NotBlank
     private String text;
+    private String author;
 }

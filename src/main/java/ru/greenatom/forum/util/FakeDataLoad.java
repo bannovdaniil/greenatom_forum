@@ -18,16 +18,16 @@ public class FakeDataLoad {
     @PostConstruct
     public void loadData() {
         for (int i = 1; i < 10; i++) {
-            MessageIncomingDto message = new MessageIncomingDto("Message 1, topic " + i);
+            MessageIncomingDto message = new MessageIncomingDto("Message 1, topic " + i, "Author " + i);
             TopicIncomingDto topicDto = new TopicIncomingDto(
                     "Topic " + i + " name",
                     message
             );
 
-            UUID topicId = topicService.save(topicDto, "Daniil").getUuid();
+            UUID topicId = topicService.save(topicDto).getUuid();
 
             for (int j = 2; j < 20; j++) {
-                MessageIncomingDto messageInTopic = new MessageIncomingDto("Message " + j + ", topic " + i);
+                MessageIncomingDto messageInTopic = new MessageIncomingDto("Message " + j + ", topic " + i, "Author " + j);
 //                messageService.save(topicId, messageInTopic);
             }
         }

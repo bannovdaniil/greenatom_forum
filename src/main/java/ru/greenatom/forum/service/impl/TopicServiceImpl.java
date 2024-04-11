@@ -38,7 +38,7 @@ public class TopicServiceImpl implements TopicService {
      * @return
      */
     @Override
-    public TopicOutDto save(TopicIncomingDto topicDto, String author) {
+    public TopicOutFullDto save(TopicIncomingDto topicDto) {
         if (topicDto.getMessage() == null) {
             throw new IllegalArgumentException("Topic don't have any Message");
         }
@@ -50,12 +50,11 @@ public class TopicServiceImpl implements TopicService {
         Message message = messageMapper.map(topicDto.getMessage());
         message.setTopic_uuid(topic.getUuid());
         message.setCreated(topic.getCreated());
-        message.setAuthor(author);
         message = messageRepository.save(message);
 
         topic.getMessages().add(message);
 
-        return topicMapper.map(topic);
+        return topicMapper.mapAllFields(topic);
     }
 
     @Override

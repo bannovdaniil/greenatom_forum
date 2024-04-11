@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.UUID;
 
 public interface TopicService {
-    TopicOutDto save(TopicIncomingDto topicDto, String author);
+    TopicOutFullDto save(TopicIncomingDto topicDto);
 
-    TopicOutFullDto update(TopicUpdateDto topic);
+    TopicOutFullDto update(TopicUpdateDto topicUpdateDto);
 
     TopicOutFullDto findById(UUID uuid);
 
