@@ -33,7 +33,6 @@ public class TopicServiceImpl implements TopicService {
      * 3. устанавливем ID
      * 4. сохраняем
      * 5. генерируем топик.
-
      */
     @Override
     public TopicOutFullDto save(TopicIncomingDto topicDto) {
