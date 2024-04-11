@@ -15,7 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class TopicOutFullDto {
     private UUID uuid;
-    private String topicName;
+    private String name;
     private LocalDateTime created;
     private List<MessageOutDto> messages;
 }

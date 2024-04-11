@@ -5,10 +5,12 @@ import org.springframework.web.bind.annotation.*;
 import ru.greenatom.forum.model.Topic;
 import ru.greenatom.forum.model.dto.TopicIncomingDto;
 import ru.greenatom.forum.model.dto.TopicOutDto;
+import ru.greenatom.forum.model.dto.TopicOutFullDto;
 import ru.greenatom.forum.model.dto.TopicUpdateDto;
 import ru.greenatom.forum.service.TopicService;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -32,9 +34,10 @@ public class ForumController {
         return topicService.findAll();
     }
 
-    @GetMapping("/topic/{id}")
-    public Topic getTopic(@PathVariable String uuid) {
-        return new Topic();
+    @GetMapping("/topic/{uuid}")
+    public TopicOutFullDto getTopic(@PathVariable(name = "uuid") UUID uuid) {
+//        UUID topicUuid = UUID.fromString(uuid);
+        return topicService.findById(uuid);
     }
 
 }

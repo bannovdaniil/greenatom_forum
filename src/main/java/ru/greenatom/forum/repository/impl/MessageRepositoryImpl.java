@@ -9,13 +9,13 @@ import java.util.*;
 
 @Repository
 public class MessageRepositoryImpl implements MessageRepository {
-    private final Map<String, Message> messages = new HashMap<>();
+    private final Map<UUID, Message> messages = new HashMap<>();
 
     @Override
     public Message save(Message Message) {
         UUID uuid = UUID.randomUUID();
         Message.setUuid(uuid);
-        messages.put(uuid.toString(), Message);
+        messages.put(uuid, Message);
 
         return Message;
     }
@@ -23,8 +23,8 @@ public class MessageRepositoryImpl implements MessageRepository {
     @Override
     public Message update(Message Message) {
         UUID uuid = Message.getUuid();
-        if (messages.containsKey(uuid.toString())) {
-            messages.put(uuid.toString(), Message);
+        if (messages.containsKey(uuid)) {
+            messages.put(uuid, Message);
         } else {
             throw new NotFoundException("ID not found.");
         }
@@ -33,8 +33,8 @@ public class MessageRepositoryImpl implements MessageRepository {
 
     @Override
     public void delete(UUID uuid) {
-        if (messages.containsKey(uuid.toString())) {
-            messages.remove(uuid.toString());
+        if (messages.containsKey(uuid)) {
+            messages.remove(uuid);
         } else {
             throw new NotFoundException("ID not found.");
         }
@@ -42,8 +42,8 @@ public class MessageRepositoryImpl implements MessageRepository {
 
     @Override
     public Optional<Message> findById(UUID uuid) {
-        if (messages.containsKey(uuid.toString())) {
-            return Optional.of(messages.get(uuid.toString()));
+        if (messages.containsKey(uuid)) {
+            return Optional.of(messages.get(uuid));
         } else {
             return Optional.empty();
         }
@@ -52,5 +52,12 @@ public class MessageRepositoryImpl implements MessageRepository {
     @Override
     public List<Message> findAll() {
         return new ArrayList<>(messages.values());
+    }
+
+    @Override
+    public List<Message> findAllByTopicId(UUID topicUuid) {
+        return messages.values().stream()
+                .filter(message -> topicUuid.equals(message.getTopic_uuid()))
+                .toList();
     }
 }

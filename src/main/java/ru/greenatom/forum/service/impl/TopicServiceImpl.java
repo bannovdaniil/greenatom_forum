@@ -8,6 +8,7 @@ import ru.greenatom.forum.model.Message;
 import ru.greenatom.forum.model.Topic;
 import ru.greenatom.forum.model.dto.TopicIncomingDto;
 import ru.greenatom.forum.model.dto.TopicOutDto;
+import ru.greenatom.forum.model.dto.TopicOutFullDto;
 import ru.greenatom.forum.model.dto.TopicUpdateDto;
 import ru.greenatom.forum.repository.MessageRepository;
 import ru.greenatom.forum.repository.TopicRepository;
@@ -58,13 +59,16 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public TopicOutDto update(TopicUpdateDto topic) {
-        return null;
+    public TopicOutFullDto update(TopicUpdateDto topicUpdateDto) {
+        Topic topic = topicMapper.map(topicUpdateDto);
+        topic.setMessages(messageRepository.findAllByTopicId(topic.getUuid()));
+
+        return topicMapper.mapAllFields(topicRepository.update(topic));
     }
 
     @Override
-    public Topic findById(UUID uuid) {
-        return null;
+    public TopicOutFullDto findById(UUID uuid) {
+        return topicMapper.mapAllFields(topicRepository.findById(uuid));
     }
 
     @Override
