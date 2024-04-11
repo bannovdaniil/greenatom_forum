@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.UUID;
 
 public interface TopicService {
-    TopicOutDto save(TopicIncomingDto topicDto);
+    TopicOutDto save(TopicIncomingDto topicDto, String author);
 
     TopicOutDto update(TopicUpdateDto topic);
 
     Topic findById(UUID uuid);
 
-    List<Topic> findAll();
+    List<TopicOutDto > findAll();
 }

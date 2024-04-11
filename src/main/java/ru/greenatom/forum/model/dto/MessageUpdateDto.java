@@ -7,14 +7,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class TopicIncomingDto {
+public class MessageUpdateDto {
     @NotNull
     @NotBlank
-    private String topicName;
+    private UUID uuid;
     @NotNull
-    private MessageIncomingDto message;
+    @NotBlank
+    private String text;
 }

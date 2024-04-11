@@ -1,11 +1,13 @@
 package ru.greenatom.forum.repository.impl;
 
+import org.springframework.stereotype.Repository;
 import ru.greenatom.forum.exception.NotFoundException;
 import ru.greenatom.forum.model.Message;
 import ru.greenatom.forum.repository.MessageRepository;
 
 import java.util.*;
 
+@Repository
 public class MessageRepositoryImpl implements MessageRepository {
     private final Map<String, Message> messages = new HashMap<>();
 

@@ -1,11 +1,13 @@
 package ru.greenatom.forum.repository.impl;
 
+import org.springframework.stereotype.Repository;
 import ru.greenatom.forum.exception.NotFoundException;
 import ru.greenatom.forum.model.Topic;
 import ru.greenatom.forum.repository.TopicRepository;
 
 import java.util.*;
 
+@Repository
 public class TopicRepositoryImpl implements TopicRepository {
     private final Map<UUID, Topic> topics = new HashMap<>();
 

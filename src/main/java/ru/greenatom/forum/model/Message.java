@@ -14,7 +14,8 @@ import java.util.UUID;
 @Setter
 public class Message {
     private UUID uuid;
+    private UUID topic_uuid;
     private String text;
-    private User author;
+    private String author;
     private LocalDateTime created;
 }

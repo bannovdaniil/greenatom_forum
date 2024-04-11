@@ -1,11 +1,12 @@
 package ru.greenatom.forum.model.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -13,7 +14,10 @@ import java.util.UUID;
 @Getter
 @Setter
 public class TopicUpdateDto {
+    @NotNull
+    @NotBlank
     private UUID id;
-    private String name;
-    private LocalDateTime created;
+    @NotNull
+    @NotBlank
+    private String topicName;
 }
