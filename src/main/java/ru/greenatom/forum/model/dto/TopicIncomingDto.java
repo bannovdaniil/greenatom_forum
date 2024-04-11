@@ -1,5 +1,6 @@
 package ru.greenatom.forum.model.dto;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@Valid
 public class TopicIncomingDto {
     @NotNull
     @NotBlank

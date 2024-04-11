@@ -1,6 +1,8 @@
 package ru.greenatom.forum.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.greenatom.forum.model.dto.TopicIncomingDto;
 import ru.greenatom.forum.model.dto.TopicOutDto;
@@ -19,7 +21,7 @@ public class ForumController {
     private final TopicService topicService;
 
     @PostMapping("/topic")
-    public TopicOutFullDto createTopic(@RequestBody TopicIncomingDto topicIncomingDto, Principal principal) {
+    public TopicOutFullDto createTopic(@Valid @RequestBody TopicIncomingDto topicIncomingDto, Principal principal) {
         return topicService.save(topicIncomingDto);
     }
 

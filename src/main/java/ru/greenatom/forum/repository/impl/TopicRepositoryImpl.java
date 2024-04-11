@@ -20,15 +20,19 @@ public class TopicRepositoryImpl implements TopicRepository {
         return topic;
     }
 
+    /**
+     * В топике можно изменить только название, т.к. дата создания и id константы
+     */
     @Override
     public Topic update(Topic topic) {
         UUID uuid = topic.getUuid();
         if (!isExists(uuid)) {
             throw new NotFoundException("ID not found.");
         }
-        topics.put(uuid, topic);
+        Topic oldTopic = topics.get(uuid);
+        oldTopic.setTopicName(topic.getTopicName());
 
-        return topic;
+        return oldTopic;
     }
 
     @Override

@@ -33,13 +33,13 @@ public class TopicServiceImpl implements TopicService {
      * 3. устанавливем ID
      * 4. сохраняем
      * 5. генерируем топик.
-     *
-     * @param topicDto
-     * @return
+
      */
     @Override
     public TopicOutFullDto save(TopicIncomingDto topicDto) {
-        if (topicDto.getMessage() == null) {
+        if (topicDto.getMessage() == null ||
+                topicDto.getMessage().getText() == null ||
+                topicDto.getMessage().getText().isBlank()) {
             throw new IllegalArgumentException("Topic don't have any Message");
         }
 
@@ -57,19 +57,27 @@ public class TopicServiceImpl implements TopicService {
         return topicMapper.mapAllFields(topic);
     }
 
+    /**
+     * Изменяем топик, меняется только название
+     */
     @Override
     public TopicOutFullDto update(TopicUpdateDto topicUpdateDto) {
         Topic topic = topicMapper.map(topicUpdateDto);
-        topic.setMessages(messageRepository.findAllByTopicId(topic.getUuid()));
 
         return topicMapper.mapAllFields(topicRepository.update(topic));
     }
 
+    /**
+     * Получить топик по ID
+     */
     @Override
     public TopicOutFullDto findById(UUID uuid) {
         return topicMapper.mapAllFields(topicRepository.findById(uuid));
     }
 
+    /**
+     * Получить список топиков
+     */
     @Override
     public List<TopicOutDto> findAll() {
         return topicMapper.map(topicRepository.findAll());

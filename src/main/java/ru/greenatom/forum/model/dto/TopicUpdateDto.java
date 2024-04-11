@@ -19,5 +19,5 @@ public class TopicUpdateDto {
     private UUID id;
     @NotNull
     @NotBlank
-    private String topicName;
+    private String name;
 }

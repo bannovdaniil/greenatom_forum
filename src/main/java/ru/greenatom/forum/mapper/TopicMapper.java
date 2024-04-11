@@ -14,6 +14,8 @@ import java.util.List;
 public interface TopicMapper {
     Topic map(TopicIncomingDto dto);
 
+    @Mapping(source = "id", target = "uuid")
+    @Mapping(source = "name", target = "topicName")
     Topic map(TopicUpdateDto dto);
 
     @Mapping(source = "topicName", target = "name")
