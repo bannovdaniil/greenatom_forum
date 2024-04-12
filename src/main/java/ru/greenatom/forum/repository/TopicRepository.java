@@ -10,11 +10,7 @@ public interface TopicRepository {
 
     Topic update(Topic topic);
 
-    void delete(UUID uuid);
-
     Topic findById(UUID uuid);
 
-    List<Topic> findAll();
-
-    boolean isExists(UUID uuid);
+    List<Topic> findAll(int page, int pageSize);
 }

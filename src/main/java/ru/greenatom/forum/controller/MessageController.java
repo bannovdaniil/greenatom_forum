@@ -13,9 +13,9 @@ import java.util.UUID;
 public class MessageController {
     private MessageService messageService;
 
-    @DeleteMapping("")
+    @DeleteMapping("{messageId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@RequestParam UUID uuid) {
+    public void delete(@PathVariable(name = "messageId") UUID uuid) {
         messageService.delete(uuid);
     }
 }

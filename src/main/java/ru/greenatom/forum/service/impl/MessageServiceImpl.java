@@ -44,13 +44,16 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public List<MessageOutDto> findAll() {
-        return messageMapper.map(messageRepository.findAll());
+    public List<MessageOutDto> findAll(int page, int pageSize) {
+        if (page < 1) {
+            throw new IllegalArgumentException("Invalid page number");
+        }
+        return messageMapper.map(messageRepository.findAll(page, pageSize));
     }
 
     @Override
-    public List<MessageOutDto> findAllByTopic(UUID topicUuid) {
-        return messageMapper.map(messageRepository.findAllByTopicId(topicUuid));
+    public List<MessageOutDto> findAllByTopic(UUID topicUuid, int page, int pageSize) {
+        return messageMapper.map(messageRepository.findAllByTopicId(topicUuid, page, pageSize));
     }
 
 }

@@ -23,13 +23,9 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"var jsonData = JSON.parse(responseBody);\r",
-							"console.log(jsonData)\r",
-							"console.log(pm.globals.get(\"uuid\"));\r",
-							"pm.globals.set(\"uuid\", jsonData[0].uuid);\r",
-							"console.log(pm.globals.get(\"uuid\"));\r",
-							"pm.collectionVariables.set(\"postid\", jsonData[0].uuid)\r",
-							""
+							"var jsonData = pm.response.json();",
+							"pm.globals.set(\"uuid\", jsonData[0].uuid);",
+							"pm.collectionVariables.set(\"postid\", jsonData[0].uuid);"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -269,6 +265,219 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Create Msg for ID topic",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.globals.set(\"messageId\", jsonData.messages[0].uuid);\r",
+							"pm.collectionVariables.set(\"messageId\", jsonData.messages[0].uuid);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"console.log(pm.globals.get(\"uuid\"));\r",
+							"console.log(pm.globals.get(\"topicId\"));\r",
+							"console.log(pm.globals.get(\"meassageId\"));\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "user",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "        {\r\n            \"uuid\": \"6ae85279-4f54-4e39-8fef-4c1f8b822b7b\",\r\n            \"text\": \"New Первое сообщение\",\r\n            \"author\": \"Ivan 2\",\r\n            \"created\": \"2024-04-12T10:56:52.2671067\"\r\n        }\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/topic/{{postid}}/message",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"topic",
+						"{{postid}}",
+						"message"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Msg for ID topic",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"console.log(pm.globals.get(\"uuid\"));\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "user",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "        {\r\n            \"uuid\": \"{{messageId}}\",\r\n            \"text\": \"Edit Last сообщение\",\r\n            \"author\": \"Ivan 2\",\r\n            \"created\": \"2024-04-12T10:56:52.2671067\"\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/topic/{{postid}}/message",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"topic",
+						"{{postid}}",
+						"message"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Msg",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"console.log(pm.globals.get(\"uuid\"));\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "user",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "        {\r\n            \"uuid\": \"{{messageId}}\",\r\n            \"text\": \"Edit Last сообщение\",\r\n            \"author\": \"Ivan 2\",\r\n            \"created\": \"2024-04-12T10:56:52.2671067\"\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/message/{{messageId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"message",
+						"{{messageId}}"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
@@ -305,6 +514,14 @@
 		},
 		{
 			"key": "postid",
+			"value": ""
+		},
+		{
+			"key": "messageid",
+			"value": ""
+		},
+		{
+			"key": "messageId",
 			"value": ""
 		}
 	]

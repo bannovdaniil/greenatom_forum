@@ -15,7 +15,6 @@ import java.util.UUID;
 @Setter
 public class MessageUpdateDto {
     @NotNull
-    @NotBlank
     private UUID uuid;
     @NotNull
     @NotBlank

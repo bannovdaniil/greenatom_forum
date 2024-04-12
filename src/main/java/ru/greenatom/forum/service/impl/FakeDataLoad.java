@@ -1,4 +1,4 @@
-package ru.greenatom.forum.util;
+package ru.greenatom.forum.service.impl;
 
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,6 @@ import java.util.UUID;
 @Component
 @AllArgsConstructor
 public class FakeDataLoad {
-    //    private final MessageRepository messageRepository;
     private final TopicService topicService;
 
     @PostConstruct
@@ -26,9 +25,10 @@ public class FakeDataLoad {
 
             UUID topicId = topicService.save(topicDto).getUuid();
 
-            for (int j = 2; j < 20; j++) {
+            double count = 3 + Math.random() * 5;
+            for (int j = 2; j < count; j++) {
                 MessageIncomingDto messageInTopic = new MessageIncomingDto("Message " + j + ", topic " + i, "Author " + j);
-//                messageService.save(topicId, messageInTopic);
+                topicService.createMessage(topicId, messageInTopic);
             }
         }
     }

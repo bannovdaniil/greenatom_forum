@@ -10,9 +10,9 @@ public interface TopicService {
 
     TopicOutFullDto update(TopicUpdateDto topicUpdateDto);
 
-    TopicOutFullDto findById(UUID uuid);
+    TopicOutFullDto findById(UUID uuid, int page, int pageSize);
 
-    List<TopicOutDto> findAll();
+    List<TopicOutDto> findAll(int page, int pageSize);
 
     TopicOutFullDto createMessage(UUID topicId, MessageIncomingDto messageIncomingDto);
 

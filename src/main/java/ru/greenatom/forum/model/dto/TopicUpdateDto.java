@@ -15,7 +15,6 @@ import java.util.UUID;
 @Setter
 public class TopicUpdateDto {
     @NotNull
-    @NotBlank
     private UUID id;
     @NotNull
     @NotBlank

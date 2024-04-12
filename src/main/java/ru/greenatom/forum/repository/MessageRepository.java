@@ -14,7 +14,7 @@ public interface MessageRepository {
 
     Message findById(UUID uuid);
 
-    List<Message> findAll();
+    List<Message> findAll(int page, int pageSize);
 
-    List<Message> findAllByTopicId(UUID topicUuid);
+    List<Message> findAllByTopicId(UUID topicUuid, int page, int pageSize);
 }

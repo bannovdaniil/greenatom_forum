@@ -15,24 +15,27 @@ import java.util.UUID;
 public class TopicController {
     private final TopicService topicService;
 
-    @PostMapping("/")
+    @GetMapping(value = "")
+    public List<TopicOutDto> getAllTopic(@RequestParam(name = "page", defaultValue = "1") int page,
+                                         @RequestParam(name = "size", defaultValue = "10") int pageSize) {
+        return topicService.findAll(page, pageSize);
+    }
+
+    @PostMapping("")
     public TopicOutFullDto createTopic(@Valid @RequestBody TopicIncomingDto topicIncomingDto) {
         return topicService.save(topicIncomingDto);
     }
 
-    @PutMapping("/")
+    @PutMapping("")
     public TopicOutFullDto updateTopic(@Valid @RequestBody TopicUpdateDto topicUpdateDto) {
         return topicService.update(topicUpdateDto);
     }
 
-    @GetMapping("/")
-    public List<TopicOutDto> getTopic() {
-        return topicService.findAll();
-    }
-
     @GetMapping("/{topicId}")
-    public TopicOutFullDto getTopic(@PathVariable(name = "topicId") UUID topicUuid) {
-        return topicService.findById(topicUuid);
+    public TopicOutFullDto getTopicById(@PathVariable(name = "topicId") UUID topicUuid,
+                                        @RequestParam(name = "page", defaultValue = "1") int page,
+                                        @RequestParam(name = "size", defaultValue = "10") int pageSize) {
+        return topicService.findById(topicUuid, page, pageSize);
     }
 
 

@@ -27,7 +27,7 @@ public class TopicRepositoryImpl implements TopicRepository {
     public Topic update(Topic topic) {
         UUID uuid = topic.getUuid();
         if (!isExists(uuid)) {
-            throw new NotFoundException("ID not found.");
+            throw new NotFoundException("TopicRepository update: ID not found.");
         }
         Topic oldTopic = topics.get(uuid);
         oldTopic.setTopicName(topic.getTopicName());
@@ -36,29 +36,21 @@ public class TopicRepositoryImpl implements TopicRepository {
     }
 
     @Override
-    public void delete(UUID uuid) {
-        if (!isExists(uuid)) {
-            throw new NotFoundException("ID not found.");
-        }
-        topics.remove(uuid);
-    }
-
-    @Override
     public Topic findById(UUID uuid) {
         if (!isExists(uuid)) {
-            throw new NotFoundException("ID not found.");
+            throw new NotFoundException("TopicRepository findById: ID not found.");
         }
 
         return topics.get(uuid);
     }
 
     @Override
-    public List<Topic> findAll() {
-        return new ArrayList<>(topics.values());
+    public List<Topic> findAll(int page, int pageSize) {
+        int start = (page - 1) * pageSize;
+        return new ArrayList<>(topics.values().stream().skip(start).limit(pageSize).toList());
     }
 
-    @Override
-    public boolean isExists(UUID uuid) {
+    private boolean isExists(UUID uuid) {
         return topics.containsKey(uuid);
     }
 }

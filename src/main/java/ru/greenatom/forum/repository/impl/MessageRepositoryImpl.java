@@ -27,7 +27,7 @@ public class MessageRepositoryImpl implements MessageRepository {
             Message oldMessage = messages.get(uuid);
             oldMessage.setText(message.getText());
         } else {
-            throw new NotFoundException("ID not found.");
+            throw new NotFoundException("MessageRepository update: ID not found.");
         }
         return message;
     }
@@ -37,7 +37,7 @@ public class MessageRepositoryImpl implements MessageRepository {
         if (messages.containsKey(uuid)) {
             messages.remove(uuid);
         } else {
-            throw new NotFoundException("ID not found.");
+            throw new NotFoundException("MessageRepository delete: ID not found.");
         }
     }
 
@@ -46,19 +46,25 @@ public class MessageRepositoryImpl implements MessageRepository {
         if (messages.containsKey(uuid)) {
             return messages.get(uuid);
         } else {
-            throw new NotFoundException("ID not found.");
+            throw new NotFoundException("MessageRepository findById: ID not found.");
         }
     }
 
     @Override
-    public List<Message> findAll() {
-        return new ArrayList<>(messages.values());
+    public List<Message> findAll(int page, int pageSize) {
+        int start = (page - 1) * pageSize;
+
+        return new ArrayList<>(messages.values().stream().skip(start).limit(pageSize).toList());
     }
 
     @Override
-    public List<Message> findAllByTopicId(UUID topicId) {
+    public List<Message> findAllByTopicId(UUID topicId, int page, int pageSize) {
+        int start = (page - 1) * pageSize;
+
         return messages.values().stream()
                 .filter(message -> topicId.equals(message.getTopicUuid()))
+                .skip(start)
+                .limit(pageSize)
                 .toList();
     }
 }

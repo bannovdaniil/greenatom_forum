@@ -67,16 +67,22 @@ public class TopicServiceImpl implements TopicService {
      * Получить топик по ID
      */
     @Override
-    public TopicOutFullDto findById(UUID uuid) {
-        return topicMapper.mapAllFields(topicRepository.findById(uuid));
+    public TopicOutFullDto findById(UUID uuid, int page, int pageSize) {
+        Topic topic = topicRepository.findById(uuid);
+        topic.setMessages(messageRepository.findAllByTopicId(topic.getUuid(), page, pageSize));
+
+        return topicMapper.mapAllFields(topic);
     }
 
     /**
      * Получить список топиков
      */
     @Override
-    public List<TopicOutDto> findAll() {
-        return topicMapper.map(topicRepository.findAll());
+    public List<TopicOutDto> findAll(int page, int pageSize) {
+        if (page < 1) {
+            throw new IllegalArgumentException("Invalid page number");
+        }
+        return topicMapper.map(topicRepository.findAll(page, pageSize));
     }
 
     @Override
@@ -86,7 +92,7 @@ public class TopicServiceImpl implements TopicService {
         message.setCreated(LocalDateTime.now());
         messageRepository.save(message);
 
-        return findById(topicId);
+        return findById(topicId, 1, 1);
     }
 
     @Override
@@ -94,6 +100,6 @@ public class TopicServiceImpl implements TopicService {
         Message message = messageMapper.map(messageUpdateDto);
         messageRepository.update(message);
 
-        return findById(topicId);
+        return findById(topicId, 1, 1);
     }
 }
