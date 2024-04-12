@@ -51,7 +51,7 @@ public class ErrorHandlerController {
 
     @Getter
     public static class MyError {
-        private String message;
+        private final String message;
 
         public MyError(String message) {
             this.message = message.substring(message.indexOf(":") + 1).trim();

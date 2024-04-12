@@ -12,14 +12,11 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import ru.greenatom.forum.model.dto.MessageIncomingDto;
-import ru.greenatom.forum.model.dto.TopicIncomingDto;
 import ru.greenatom.forum.model.dto.TopicOutDto;
 import ru.greenatom.forum.service.TopicService;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -42,9 +39,6 @@ class TopicControllerTest {
     @DisplayName("Get All topics list in controller")
     @Test
     void getAllTopicThenOk() {
-        UUID expectedId = UUID.randomUUID();
-        MessageIncomingDto message = new MessageIncomingDto("Message text test", "User test");
-        TopicIncomingDto topic = new TopicIncomingDto("test topic", message);
         int expectedSize = 3;
         int expectedPage = 1;
 

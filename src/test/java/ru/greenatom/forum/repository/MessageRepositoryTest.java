@@ -40,7 +40,6 @@ class MessageRepositoryTest {
         Message saveMessage = messageRepository.save(message);
 
         saveMessage.setText(expectedText);
-        Message updateMessage = messageRepository.update(saveMessage);
 
         Message getMessage = messageRepository.findById(message.getUuid());
         Assertions.assertEquals(saveMessage.getText(), getMessage.getText());

@@ -6,7 +6,6 @@ import ru.greenatom.forum.mapper.MessageMapper;
 import ru.greenatom.forum.model.Message;
 import ru.greenatom.forum.model.dto.MessageIncomingDto;
 import ru.greenatom.forum.model.dto.MessageOutDto;
-import ru.greenatom.forum.model.dto.MessageUpdateDto;
 import ru.greenatom.forum.repository.MessageRepository;
 import ru.greenatom.forum.service.MessageService;
 
@@ -27,20 +26,8 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public MessageOutDto update(MessageUpdateDto messageDto) {
-        Message message = messageMapper.map(messageDto);
-
-        return messageMapper.map(messageRepository.save(message));
-    }
-
-    @Override
     public void delete(UUID uuid) {
         messageRepository.delete(uuid);
-    }
-
-    @Override
-    public MessageOutDto findById(UUID uuid) {
-        return messageMapper.map(messageRepository.findById(uuid));
     }
 
     @Override
@@ -49,11 +36,6 @@ public class MessageServiceImpl implements MessageService {
             throw new IllegalArgumentException("Invalid page number");
         }
         return messageMapper.map(messageRepository.findAll(page, pageSize));
-    }
-
-    @Override
-    public List<MessageOutDto> findAllByTopic(UUID topicUuid, int page, int pageSize) {
-        return messageMapper.map(messageRepository.findAllByTopicId(topicUuid, page, pageSize));
     }
 
 }

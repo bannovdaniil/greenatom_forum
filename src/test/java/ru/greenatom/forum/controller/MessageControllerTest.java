@@ -12,11 +12,9 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import ru.greenatom.forum.model.Message;
 import ru.greenatom.forum.service.MessageService;
 
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -39,10 +37,8 @@ class MessageControllerTest {
 
     @DisplayName("Delete message by ID controller method")
     @Test
-    void deleteMessageByIdInControllerThenOk() throws Exception {
+    void deleteMessageByIdInControllerThenOk() {
         UUID expectedId = UUID.randomUUID();
-        UUID topicId = UUID.randomUUID();
-        Message message = new Message(expectedId, topicId, "Test text", "Test user", LocalDateTime.now());
 
         controller.delete(expectedId);
 
