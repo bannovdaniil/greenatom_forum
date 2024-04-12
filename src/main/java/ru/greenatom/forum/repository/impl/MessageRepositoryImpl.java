@@ -12,23 +12,24 @@ public class MessageRepositoryImpl implements MessageRepository {
     private final Map<UUID, Message> messages = new HashMap<>();
 
     @Override
-    public Message save(Message Message) {
+    public Message save(Message message) {
         UUID uuid = UUID.randomUUID();
-        Message.setUuid(uuid);
-        messages.put(uuid, Message);
+        message.setUuid(uuid);
+        messages.put(uuid, message);
 
-        return Message;
+        return message;
     }
 
     @Override
-    public Message update(Message Message) {
-        UUID uuid = Message.getUuid();
+    public Message update(Message message) {
+        UUID uuid = message.getUuid();
         if (messages.containsKey(uuid)) {
-            messages.put(uuid, Message);
+            Message oldMessage = messages.get(uuid);
+            oldMessage.setText(message.getText());
         } else {
             throw new NotFoundException("ID not found.");
         }
-        return Message;
+        return message;
     }
 
     @Override
@@ -41,11 +42,11 @@ public class MessageRepositoryImpl implements MessageRepository {
     }
 
     @Override
-    public Optional<Message> findById(UUID uuid) {
+    public Message findById(UUID uuid) {
         if (messages.containsKey(uuid)) {
-            return Optional.of(messages.get(uuid));
+            return messages.get(uuid);
         } else {
-            return Optional.empty();
+            throw new NotFoundException("ID not found.");
         }
     }
 
@@ -55,9 +56,9 @@ public class MessageRepositoryImpl implements MessageRepository {
     }
 
     @Override
-    public List<Message> findAllByTopicId(UUID topicUuid) {
+    public List<Message> findAllByTopicId(UUID topicId) {
         return messages.values().stream()
-                .filter(message -> topicUuid.equals(message.getTopic_uuid()))
+                .filter(message -> topicId.equals(message.getTopicUuid()))
                 .toList();
     }
 }

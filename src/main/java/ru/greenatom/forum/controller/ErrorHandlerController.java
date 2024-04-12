@@ -10,17 +10,23 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.greenatom.forum.exception.NotFoundException;
 
 @RestControllerAdvice(assignableTypes = {
-        ForumController.class,
+        TopicController.class,
         MessageController.class
-}
-)
+})
 public class ErrorHandlerController {
     @ExceptionHandler({
-            MethodArgumentNotValidException.class,
             IllegalArgumentException.class
     })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public MyError handleBadRequest(final Exception e) {
+        return new MyError(e.getMessage());
+    }
+
+    @ExceptionHandler({
+            MethodArgumentNotValidException.class
+    })
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public MyError handleNotValidRequest(final Exception e) {
         return new MyError(e.getMessage());
     }
 
